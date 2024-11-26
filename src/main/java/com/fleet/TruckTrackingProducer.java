@@ -28,14 +28,6 @@ public class TruckTrackingProducer {
         properties.put("bootstrap.servers", Common.BOOTSTRAP_SERVERS);
         properties.put("key.serializer", StringSerializer.class.getName());
         properties.put("value.serializer", StringSerializer.class.getName());
-
-        // // Set number of brokers to 1
-        // properties.put("acks", "1");
-        // properties.put("retries", "1");
-        // properties.put("batch.size", 16384);
-
-        // properties.put("metadata.fetch.timeout.ms", "5000");
-
         
         
 
@@ -73,30 +65,4 @@ public class TruckTrackingProducer {
 
         
     }
-
-    // private static void createTopicIfNotExists() {
-    //     Properties adminProps = new Properties();
-    //     adminProps.put("bootstrap.servers", Common.BOOTSTRAP_SERVERS);
-    //     AdminClient adminClient = AdminClient.create(adminProps);
-
-    //     try {
-    //         ListTopicsResult topics = adminClient.listTopics();
-    //         Set<String> topicNames = topics.names().get();
-
-    //         // Check if the topic exists
-    //         if (!topicNames.contains(Common.TOPIC)) {
-    //             // If not, create the topic with 1 partition and replication factor of 1
-    //             NewTopic newTopic = new NewTopic(Common.TOPIC, 1, (short) 1);  // 1 partition, replication factor 1
-    //             CreateTopicsResult result = adminClient.createTopics(java.util.Collections.singletonList(newTopic));
-    //             result.all().get();  // Wait until the topic is created
-    //             System.out.println("Topic created: " + Common.TOPIC + " with replication factor 1");
-    //         } else {
-    //             System.out.println("Topic " + Common.TOPIC + " already exists.");
-    //         }
-    //     } catch (ExecutionException | InterruptedException e) {
-    //         System.out.println("Error creating topic: " + e.getMessage());
-    //     } finally {
-    //         adminClient.close();
-    //     }
-    // }
 }
