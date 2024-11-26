@@ -5,6 +5,8 @@ import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fleet.errors.MessageResponseError;
+import com.fleet.errors.ServerStatusError;
 
 import java.util.Properties;
 import java.time.Duration;
@@ -42,10 +44,13 @@ public class TruckTrackingConsumer {
                             message.getStatus() + " at " + 
                             message.getCurrentLocation());
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        // e.printStackTrace();
+                        throw new MessageResponseError(e.getMessage());
                     }
                 }
             }
+        } catch (Exception e) {
+            throw new ServerStatusError(e.getMessage());
         }
     }
 }

@@ -3,15 +3,15 @@ package com.fleet.errors;
 import java.util.Date;
 
 public class InvalidDataError extends BaseTruckTrackingError {
-	public InvalidDataError(String message, int errorCode, Date timestamp) {
-        super(message, errorCode, timestamp);
+	public InvalidDataError(String errorMessage, int errorCode, Date timestamp) {
+        super(errorMessage, errorCode, timestamp);
     }
 
-    public InvalidDataError(String message, int errorCode) {
-        super(message, errorCode);
+    public InvalidDataError(String errorMessage, int errorCode) {
+        super(errorMessage, errorCode);
     }
 
-    public InvalidDataError(String message) {
-        super(message);
+    public InvalidDataError(String errorMessage) {
+        super(errorMessage);
     }
 }
