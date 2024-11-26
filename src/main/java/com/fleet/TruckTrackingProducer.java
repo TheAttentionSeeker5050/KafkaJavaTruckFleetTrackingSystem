@@ -1,22 +1,14 @@
 package com.fleet;
 
-import org.apache.kafka.clients.admin.AdminClient;
-import org.apache.kafka.clients.admin.CreateTopicsResult;
-import org.apache.kafka.clients.admin.ListTopicsResult;
-import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.StringSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Properties;
-import java.util.Set;
 import java.util.UUID;
-import java.util.concurrent.ExecutionException;
 
 public class TruckTrackingProducer {
-    // private static final String TOPIC = "travel-log";
-    // private static final String BOOTSTRAP_SERVERS = "localhost:9091";
 
     public static void main(String[] args) throws Exception {
 
