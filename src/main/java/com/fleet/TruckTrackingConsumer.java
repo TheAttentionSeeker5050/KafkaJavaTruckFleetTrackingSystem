@@ -21,7 +21,7 @@ public class TruckTrackingConsumer {
         properties.put("value.deserializer", StringDeserializer.class.getName());
         properties.put("auto.offset.reset", "earliest");
 
-        System.out.println("Starting consumer...");
+        System.out.println("Starting consumer...");        
 
         try (KafkaConsumer<String, String> consumer = new KafkaConsumer<>(properties)) {
             // Subscribe to the topic

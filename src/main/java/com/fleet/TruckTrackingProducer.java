@@ -25,7 +25,7 @@ public class TruckTrackingProducer {
 
         KafkaProducer<String, String> producer = new KafkaProducer<>(properties);
 
-        System.out.println("Starting producer...");
+        // System.out.println("Starting producer...");
 
         // Create an example message
         TruckTrackingMessage message = new TruckTrackingMessage(
@@ -47,13 +47,18 @@ public class TruckTrackingProducer {
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonMessage = objectMapper.writeValueAsString(message);
 
-        // Send message to Kafka
-        ProducerRecord<String, String> record = new ProducerRecord<>(Common.TOPIC, UUID.randomUUID().toString(), jsonMessage);
-        producer.send(record);
-        System.out.println("Message sent: " + jsonMessage);
-
-        // Close producer
-        producer.close();
+        // Try catch block to handle exceptions
+        try {
+            // Send message to Kafka
+            ProducerRecord<String, String> record = new ProducerRecord<>(Common.TOPIC, UUID.randomUUID().toString(), jsonMessage);
+            producer.send(record);
+            // System.out.println("Message sent: " + jsonMessage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // Close producer
+            producer.close();
+        }
 
         
     }
