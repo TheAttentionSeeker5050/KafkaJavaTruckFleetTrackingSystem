@@ -1,4 +1,4 @@
-package com.fleet.models;
+package org.fleetlogger.models;
 
 public class TruckTrackingMessage {
     private String truckId;

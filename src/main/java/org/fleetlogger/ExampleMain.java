@@ -1,19 +1,22 @@
-package com.fleet;
+package org.fleetlogger;
 
-import com.fleet.errors.BaseTruckTrackingError;
-import com.fleet.errors.MessageResponseError;
-import com.fleet.errors.KafkaServerStatusError;
-import com.fleet.models.TruckTrackingMessage;
+import org.fleetlogger.errors.BaseTruckTrackingError;
+import org.fleetlogger.errors.KafkaServerStatusError;
+import org.fleetlogger.errors.MessageResponseError;
+import org.fleetlogger.models.TruckTrackingMessage;
 
-public class main {
+// This is just a test file to run the producer and consumer
+// This file is not part of the main application and will be removed in the future
+// Next stage is to make this logic part of the unit tests
+public class ExampleMain {
 
     public static void main(String[] args) {
 
         // System.out.println("starting program");
         
         TruckTrackingMessage message = new TruckTrackingMessage(
-            "T12345 NEw", 
-            "Refrigerated NEw", 
+            "T12345", 
+            "Refrigerated", 
             "Refrigerated Goods", 
             true, 
             15000, 

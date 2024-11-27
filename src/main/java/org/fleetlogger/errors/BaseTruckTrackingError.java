@@ -1,4 +1,4 @@
-package com.fleet.errors;
+package org.fleetlogger.errors;
 
 import java.util.Date;
 

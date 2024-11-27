@@ -1,11 +1,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.fleet</groupId>
+  <groupId>org.fleet</groupId>
   <artifactId>truck-fleet-tracking</artifactId>
   <packaging>jar</packaging>
-  <version>1.0-SNAPSHOT</version>
-  <name>truck-fleet-tracking</name>
+  <version>1.0.0</version>
+  <name>Truck Fleet Tracking System</name>
+  <description>A Java library for Kafka-based truck fleet tracking system</description>
   <url>http://maven.apache.org</url>
   <build>
     <plugins>
@@ -61,4 +62,5 @@
         <version>3.0.0</version>
     </dependency>
   </dependencies>
+
 </project>

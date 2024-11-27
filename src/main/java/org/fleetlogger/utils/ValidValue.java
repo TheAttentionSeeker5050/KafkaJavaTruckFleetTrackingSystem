@@ -1,4 +1,4 @@
-package com.fleet.common;
+package org.fleetlogger.utils;
 
 
 import jakarta.validation.Constraint;

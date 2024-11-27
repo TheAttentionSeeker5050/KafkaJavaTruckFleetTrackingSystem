@@ -1,10 +1,9 @@
-package com.fleet.models;
+package org.fleetlogger.models;
 
-import com.fleet.common.ValidValue;
+import org.fleetlogger.utils.ValidValue;
 
 // Import validation annotations
 import jakarta.validation.constraints.*;
-import jakarta.validation.constraints.AssertFalse.List;
 
 public class TruckTrackingMessageWithValidations extends TruckTrackingMessage {
 

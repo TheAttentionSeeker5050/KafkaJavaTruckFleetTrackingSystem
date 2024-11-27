@@ -1,15 +1,16 @@
-package com.fleet;
+package org.fleetlogger;
 
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.common.serialization.StringDeserializer;
+import org.fleetlogger.errors.BaseTruckTrackingError;
+import org.fleetlogger.errors.KafkaServerStatusError;
+import org.fleetlogger.errors.MessageResponseError;
+import org.fleetlogger.models.TruckTrackingMessage;
+import org.fleetlogger.utils.KafkaServerInterface;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fleet.common.KafkaServerInterface;
-import com.fleet.errors.BaseTruckTrackingError;
-import com.fleet.errors.MessageResponseError;
-import com.fleet.errors.KafkaServerStatusError;
-import com.fleet.models.TruckTrackingMessage;
 
 import java.util.Properties;
 import java.time.Duration;
@@ -22,16 +23,35 @@ public class TruckTrackingConsumer {
 
     // Make a data structure that the consumer will use to modify the list of topics it is subscribed to
     public ConsumerRecords<String, String> records;
+    
+    private String bootstrapServers;
+    private String topic;
+    
 
     public TruckTrackingConsumer() {
+        this(System.getenv().getOrDefault("KAFKA_BOOTSTRAP_SERVERS", KafkaServerInterface.BOOTSTRAP_SERVERS), System.getenv().getOrDefault("KAFKA_DEFAULT_TOPIC", KafkaServerInterface.TOPIC), System.getenv().getOrDefault("KAFKA_GROUP_ID", KafkaServerInterface.GROUP_ID));
+    }
+
+    // Another constructor where you can set up bootstrapServers and topic, and another one where you can also specify the group ID
+    // This uses the constructor above to follow DRY rule
+    public TruckTrackingConsumer(String bootstrapServers, String topic) {
+        this(bootstrapServers, topic, System.getenv().getOrDefault("KAFKA_GROUP_ID", KafkaServerInterface.GROUP_ID));
+    }
+
+    public TruckTrackingConsumer(String bootstrapServers, String topic, String groupId) {
+        // Set the bootstrap server and topic
+        this.bootstrapServers = bootstrapServers;
+        this.topic = topic;
+
         // Kafka Consumer configuration
         this.properties = new Properties();
-        this.properties.put("bootstrap.servers", KafkaServerInterface.BOOTSTRAP_SERVERS);
-        this.properties.put("group.id", KafkaServerInterface.GROUP_ID);
+        this.properties.put("bootstrap.servers", this.bootstrapServers);
+        this.properties.put("group.id", groupId);
         this.properties.put("key.deserializer", StringDeserializer.class.getName());
         this.properties.put("value.deserializer", StringDeserializer.class.getName());
         this.properties.put("auto.offset.reset", "earliest");
     }
+
 
     public void subscribeToTopic() throws BaseTruckTrackingError {
 
@@ -40,7 +60,7 @@ public class TruckTrackingConsumer {
             this.consumer = new KafkaConsumer<>(this.properties);
 
             // Subscribe to the topic
-            this.consumer.subscribe(Collections.singletonList(KafkaServerInterface.TOPIC));
+            this.consumer.subscribe(Collections.singletonList(this.topic));
 
             // Poll for new messages
             while (true) {
