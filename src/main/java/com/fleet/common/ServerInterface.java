@@ -1,4 +1,4 @@
-package com.fleet;
+package com.fleet.common;
 
 import java.util.Properties;
 import java.util.Set;
@@ -10,7 +10,7 @@ import org.apache.kafka.clients.admin.ListTopicsResult;
 import org.apache.kafka.clients.admin.NewTopic;
 
 // Interface for the TruckTrackingProducer and TruckTrackingConsumer classes
-public interface Common {
+public interface ServerInterface {
 
     // App Constants
     public static final String TOPIC = "travel-log";
@@ -32,9 +32,6 @@ public interface Common {
                 NewTopic newTopic = new NewTopic(TOPIC, 1, (short) 1);  // 1 partition, replication factor 1
                 CreateTopicsResult result = adminClient.createTopics(java.util.Collections.singletonList(newTopic));
                 result.all().get();  // Wait until the topic is created
-                System.out.println("Topic created: " + TOPIC + " with replication factor 1");
-            } else {
-                System.out.println("Topic " + TOPIC + " already exists.");
             }
         } catch (ExecutionException | InterruptedException e) {
             System.out.println("Error creating topic: " + e.getMessage());

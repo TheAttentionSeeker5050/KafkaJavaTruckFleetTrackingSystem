@@ -3,12 +3,13 @@ package com.fleet;
 import com.fleet.errors.BaseTruckTrackingError;
 import com.fleet.errors.MessageResponseError;
 import com.fleet.errors.ServerStatusError;
+import com.fleet.models.TruckTrackingMessage;
 
 public class main {
 
     public static void main(String[] args) {
 
-        System.out.println("starting program");
+        // System.out.println("starting program");
         
         TruckTrackingMessage message = new TruckTrackingMessage(
             "T12345 NEw", 
@@ -32,20 +33,39 @@ public class main {
         try {
             producerInstance.sendMessage();
         } catch (ServerStatusError error) {
-            // TODO: handle exception
             System.out.println("ServerStatusError: " + error.getMessage());
 
         } catch (MessageResponseError error) {
-            // TODO: handle exception
             System.out.println("MessageResponseError: " + error.getMessage());
 
         } catch (BaseTruckTrackingError error) {
-            // TODO Auto-generated catch block
             System.out.println("BaseTruckTrackingError: " + error.getMessage());
-
-            // error.printStackTrace();
+        } finally {
+            consume();
+            System.out.println("Closing producer");
         }
+
+
+
     }
+
+    public static void consume() {
+        // Create a TruckTrackingConsumer instance
+        TruckTrackingConsumer consumerInstance = new TruckTrackingConsumer();
+
+        // Try catch emit a message
+        try {
+            consumerInstance.subscribeToTopic();
+        } catch (ServerStatusError error) {
+            System.out.println("ServerStatusError: " + error.getMessage());
+        } catch (BaseTruckTrackingError error) {
+            System.out.println("BaseTruckTrackingError: " + error.getMessage());
+        } finally {
+            System.out.println("Consumer Instance records: " + consumerInstance.records);
+        }
+
+    }
+
 
     
 }

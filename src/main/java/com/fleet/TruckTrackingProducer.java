@@ -4,9 +4,11 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.StringSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fleet.common.ServerInterface;
 import com.fleet.errors.BaseTruckTrackingError;
 import com.fleet.errors.MessageResponseError;
 import com.fleet.errors.ServerStatusError;
+import com.fleet.models.TruckTrackingMessage;
 
 import java.util.Properties;
 import java.util.UUID;
@@ -22,11 +24,11 @@ public class TruckTrackingProducer {
     public void sendMessage() throws BaseTruckTrackingError {
 
         // Check if the topic exists, and create it if necessary
-        Common.createTopicIfNotExists();
+        ServerInterface.createTopicIfNotExists();
 
         // Kafka Producer configuration
         Properties properties = new Properties();
-        properties.put("bootstrap.servers", Common.BOOTSTRAP_SERVERS);
+        properties.put("bootstrap.servers", ServerInterface.BOOTSTRAP_SERVERS);
         properties.put("key.serializer", StringSerializer.class.getName());
         properties.put("value.serializer", StringSerializer.class.getName());
     
@@ -39,7 +41,7 @@ public class TruckTrackingProducer {
             // Try catch block to handle exceptions
             try {
                 // Send message to Kafka
-                ProducerRecord<String, String> record = new ProducerRecord<>(Common.TOPIC, UUID.randomUUID().toString(), jsonMessage);
+                ProducerRecord<String, String> record = new ProducerRecord<>(ServerInterface.TOPIC, UUID.randomUUID().toString(), jsonMessage);
                 producer.send(record);
                 
             } catch (Exception e) {
