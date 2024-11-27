@@ -153,21 +153,37 @@ target/truck-fleet-tracking-1.0.0.jar
 
 If you'd like to run Kafka and Zookeeper locally using Docker Compose, you can use the included `docker-compose.yml` file.
 
-1. **Start Kafka and Zookeeper with Docker Compose**:
+### 1. Start Kafka and Zookeeper with Docker Compose
+
+To run Kafka and Zookeeper locally using Docker Compose, simply use the following command:
 
 ```bash
 docker-compose up
 ```
 
-This will start both Kafka and Zookeeper locally on your machine.
+This will start both Kafka and Zookeeper locally on your machine. Ensure that both services are fully started before proceeding with running the application.
 
-2. **Run the Java Application**:
+### 2. Include the Package into your Project
 
-Once the Kafka server is up and running, you can use the following command to run your Java application and start sending truck tracking messages:
+To include this Kafka producer package into your own project, download the latest JAR file from the GitHub repository releases page and add it to your project manually. 
 
-```bash
-java -jar target/truck-fleet-tracking-1.0.0.jar
+**Steps to include the JAR:**
+
+1. Go to the **[releases section](https://github.com/TheAttentionSeeker5050/KafkaJavaTruckFleetTrackingSystem/releases)** of the GitHub repository.
+2. Download the JAR file (e.g., `truck-fleet-tracking-1.0.0.jar`) from the assets section.
+3. Add the downloaded JAR to your project's classpath.
+
+Alternatively, if you’re using a build tool like Maven or Gradle, you can manually upload the JAR to your repository and reference it in your `pom.xml` or `build.gradle` file.
+
+### 3. Import from this Library
+
+To use the `TruckTrackingProducer` and `TruckTrackingMessage` classes in your own code, import them as follows:
+
+```java
+import com.fleettracking.TruckTrackingProducer;
+import com.fleettracking.TruckTrackingMessage;
 ```
+
 
 ### Using the Java Producer
 
