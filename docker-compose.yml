@@ -6,9 +6,9 @@ services:
     image: confluentinc/cp-zookeeper:latest
     container_name: zookeeper
     environment:
-      - ZOOKEEPER_CLIENT_PORT=2181
+      - ZOOKEEPER_CLIENT_PORT=${ZOOKEEPER_CLIENT_PORT:-2181}
     ports:
-      - "2181:2181"
+      - "${ZOOKEEPER_CLIENT_PORT:-2181}:${ZOOKEEPER_CLIENT_PORT:-2181}"
     networks:
       - kafka_network
 
@@ -18,14 +18,14 @@ services:
     container_name: kafka
     environment:
       - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:9091
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka:${KAFKA_PORT:-9092},PLAINTEXT_HOST://localhost:${KAFKA_HOST_PORT:-9091}
       - KAFKA_LISTENER_NAME_INTERNAL=INTERNAL
       - KAFKA_LISTENER_INTERNAL_PORT=9093
       - KAFKA_LISTENER_INTERNAL=INTERNAL
-      - KAFKA_LISTENER_PORT=9092
+      - KAFKA_LISTENER_PORT=${KAFKA_PORT:-9092}
 
       # Zookeeper connection
-      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:${ZOOKEEPER_CLIENT_PORT:-2181}
       
       # Set replication factors for internal topics to 1 (for single broker setup)
       - KAFKA_OFFSET_TOPIC_REPLICATION_FACTOR=1
@@ -35,11 +35,11 @@ services:
       - KAFKA_LISTENER_HOSTNAME=0.0.0.0
 
       # Kafka auto create topics and default topic
-      - KAFKA_AUTO_CREATE_TOPICS_ENABLE=true
-      - KAFKA_DEFAULT_TOPIC=travel-log
+      - KAFKA_AUTO_CREATE_TOPICS_ENABLE=${KAFKA_AUTO_CREATE_TOPICS_ENABLE:-true}
+      - KAFKA_DEFAULT_TOPIC=${KAFKA_DEFAULT_TOPIC:-travel-log}
     ports:
-      - "9092:9092"
-      - "9091:9091"
+      - "${KAFKA_PORT:-9092}:${KAFKA_PORT:-9092}"
+      - "${KAFKA_HOST_PORT:-9091}:${KAFKA_HOST_PORT:-9091}"
     depends_on:
       - zookeeper
     networks:
@@ -52,9 +52,9 @@ services:
     container_name: kafka-ui
     environment:
       - KAFKA_CLUSTERS_0_NAME=local
-      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka:9092
+      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka:${KAFKA_PORT:-9092}
     ports:
-      - "8080:8080"
+      - "${KAFKA_UI_PORT:-8080}:8080"
     networks:
       - kafka_network
 

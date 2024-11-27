@@ -1,0 +1,17 @@
+# This has the default values, nothing really secret is shown here, please tailor it to your server configuration as  needed
+# The contents of this file are used by both the docker compose file and the library itself. 
+# In case you are importing this as a package, you will need to set up these variables yourself from either your server/cloud console or a environment file
+
+# Zookeeper
+ZOOKEEPER_CLIENT_PORT=2181
+
+# Kafka
+KAFKA_PORT=9092
+KAFKA_HOST_PORT=9091
+KAFKA_AUTO_CREATE_TOPICS_ENABLE=true
+KAFKA_DEFAULT_TOPIC=travel-log
+KAFKA_GROUP_ID=fleet-tracking-group
+
+
+# Kafka UI
+KAFKA_UI_PORT=8080
