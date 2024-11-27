@@ -2,7 +2,7 @@ package com.fleet;
 
 import com.fleet.errors.BaseTruckTrackingError;
 import com.fleet.errors.MessageResponseError;
-import com.fleet.errors.ServerStatusError;
+import com.fleet.errors.KafkaServerStatusError;
 import com.fleet.models.TruckTrackingMessage;
 
 public class main {
@@ -32,7 +32,7 @@ public class main {
         // Try catch emit a message
         try {
             producerInstance.sendMessage();
-        } catch (ServerStatusError error) {
+        } catch (KafkaServerStatusError error) {
             System.out.println("ServerStatusError: " + error.getMessage());
 
         } catch (MessageResponseError error) {
@@ -44,9 +44,6 @@ public class main {
             consume();
             System.out.println("Closing producer");
         }
-
-
-
     }
 
     public static void consume() {
@@ -56,7 +53,7 @@ public class main {
         // Try catch emit a message
         try {
             consumerInstance.subscribeToTopic();
-        } catch (ServerStatusError error) {
+        } catch (KafkaServerStatusError error) {
             System.out.println("ServerStatusError: " + error.getMessage());
         } catch (BaseTruckTrackingError error) {
             System.out.println("BaseTruckTrackingError: " + error.getMessage());
@@ -65,7 +62,4 @@ public class main {
         }
 
     }
-
-
-    
 }

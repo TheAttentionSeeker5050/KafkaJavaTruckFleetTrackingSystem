@@ -5,10 +5,10 @@ import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fleet.common.ServerInterface;
+import com.fleet.common.KafkaServerInterface;
 import com.fleet.errors.BaseTruckTrackingError;
 import com.fleet.errors.MessageResponseError;
-import com.fleet.errors.ServerStatusError;
+import com.fleet.errors.KafkaServerStatusError;
 import com.fleet.models.TruckTrackingMessage;
 
 import java.util.Properties;
@@ -26,8 +26,8 @@ public class TruckTrackingConsumer {
     public TruckTrackingConsumer() {
         // Kafka Consumer configuration
         this.properties = new Properties();
-        this.properties.put("bootstrap.servers", ServerInterface.BOOTSTRAP_SERVERS);
-        this.properties.put("group.id", ServerInterface.GROUP_ID);
+        this.properties.put("bootstrap.servers", KafkaServerInterface.BOOTSTRAP_SERVERS);
+        this.properties.put("group.id", KafkaServerInterface.GROUP_ID);
         this.properties.put("key.deserializer", StringDeserializer.class.getName());
         this.properties.put("value.deserializer", StringDeserializer.class.getName());
         this.properties.put("auto.offset.reset", "earliest");
@@ -40,7 +40,7 @@ public class TruckTrackingConsumer {
             this.consumer = new KafkaConsumer<>(this.properties);
 
             // Subscribe to the topic
-            this.consumer.subscribe(Collections.singletonList(ServerInterface.TOPIC));
+            this.consumer.subscribe(Collections.singletonList(KafkaServerInterface.TOPIC));
 
             // Poll for new messages
             while (true) {
@@ -63,7 +63,7 @@ public class TruckTrackingConsumer {
                 }
             }
         } catch (Exception e) {
-            throw new ServerStatusError(e.getMessage());
+            throw new KafkaServerStatusError(e.getMessage());
         }
     }
 }

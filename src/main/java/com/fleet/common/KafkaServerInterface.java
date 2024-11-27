@@ -10,7 +10,7 @@ import org.apache.kafka.clients.admin.ListTopicsResult;
 import org.apache.kafka.clients.admin.NewTopic;
 
 // Interface for the TruckTrackingProducer and TruckTrackingConsumer classes
-public interface ServerInterface {
+public interface KafkaServerInterface {
 
     // App Constants
     public static final String TOPIC = "travel-log";
